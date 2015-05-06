@@ -11,7 +11,6 @@
 		this.loadSprints().then(
 			this.renderSprints.bind(this)
 		);
-
 	};
 
 	Retrospective.Manager.prototype.addEventListerners = function() {

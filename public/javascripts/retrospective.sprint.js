@@ -7,7 +7,7 @@
 	Retrospective.Sprint.all = function(){
 		var deferred = $.Deferred();
   		var result = $.ajax({
-            	url: Retrospective.Config.baseUrl + "/sprints", 
+            	url: Retrospective.Config.baseUrl + "/sprints",
             	dataType: "json",
             	crossDomain: true,
     	});

@@ -39,12 +39,12 @@
     <div class="container-fluid">
       <div class="row">
 
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div id="membersContainer" class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview</a></li>
+            <!--<li class="active"><a href="#">Overview</a></li>
             <li><a href="#">Reports</a></li>
             <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li>
+            <li><a href="#">Export</a></li>-->
           </ul>
         </div>
         <div class="col-sm-9 col-md-10 main">
@@ -78,5 +78,26 @@
 	<script src="../public/javascripts/retrospective.boot.js"></script>
   <script src="../public/javascripts/retrospective.manager.js"></script>
   <script src="../public/javascripts/retrospective.sprint.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      $.ajax({
+          url: Retrospective.Config.baseUrl + "/members",
+          dataType: "json"
+      }).success(function(result) {
+          
+          var membersContainer = $('#membersContainer');
+          var ul = membersContainer.find('ul');
+
+          for (var i = 0; i < result.length; i++) {
+            var memberItem = $("<li data-teamid=" +  result[i].TeamId + "> <a href='#'>" + result[i].Name + "</a></li>");
+            ul.append(memberItem);
+          };
+
+      });       
+    });
+
+
+  </script>
 </body>
 </html>

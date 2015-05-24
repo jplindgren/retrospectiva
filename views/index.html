@@ -1,103 +1,178 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Retrospective Tool</title>
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-	<link rel="stylesheet" href="../public/stylesheets/style.css">
-	<link rel="stylesheet" href="../public/stylesheets/bootstrap.css">
-	<link rel="stylesheet" href="../public/stylesheets/bootstrap-theme.css">
-</head>
-<body>	
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Retrospectiva</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Admin</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
-          </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
-        </div>
-      </div>
-    </nav>
+        <link rel="stylesheet" href="../public/stylesheets/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="../public/stylesheets/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="../public/stylesheets/main.css">
 
-    <div class="container-fluid">
-      <div class="row">
+        <script src="../public/javascripts/libs/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <form class="navbar-form navbar-right" role="form">
+                <div class="form-group">
+                  <input type="text" placeholder="Email" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input type="password" placeholder="Password" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success">Sign in</button>
+              </form>
+            </div><!--/.navbar-collapse -->
+          </div>
+        </nav>
 
-        <div id="membersContainer" class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <!--<li class="active"><a href="#">Overview</a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li>-->
-          </ul>
-        </div>
-        <div class="col-sm-9 col-md-10 main">
-          <h1 class="page-header">Sprint 133</h1>
-          
-          <form>
-            <select class="form-control sprints" id="sprintList">
-            </select>
+        <section id="main-view" style="display:none">
+            <!-- Main jumbotron for a primary marketing message or call to action -->
+            <div class="jumbotron">
+                <div class="container">
+                    <h1>Hello, world!</h1>
+                    <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+                    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+                </div>
+            </div>
 
-    			  <div class="form-group">
-    			    <label for="txtWorkedWell">O que funcionou?</label>
-    			    <textarea class="form-control" id="txtWorkedWell" autofocus rows="3"></textarea>
-    			  </div>
-    			  <div class="form-group">
-    			    <label for="txtNeedsWork">O que precisa melhorar?</label>
-    			    <textarea class="form-control" id="txtNeedsWork" rows="3"></textarea>
-    			  </div>
-    			  <button type="submit" class="btn btn-default">Submit</button>
-    			</form>
+            <div class="container">
+                <!-- Example row of columns -->
+                <div class="row">
+                    <div class="col-md-4">
+                      <h2>Heading</h2>
+                      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                    </div>
+                    <div class="col-md-4">
+                      <h2>Heading</h2>
+                      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                   </div>
+                    <div class="col-md-4">
+                      <h2>Heading</h2>
+                      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                    </div>
+                </div>
 
-        </div>
-      </div>
-    </div>
+                <hr>
+
+                <footer>
+                    <p>&copy; Company 2015</p>
+                </footer>
+            </div> <!-- /container --> 
+        </section>
+
+        <section id="team-retrospective-view" style="display:block">
+
+            <div class="container">
+                <!-- Example row of columns -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <h2>Sprints</h2>
+                        <ul class="nav nav-pills nav-stacked" data-bind="foreach: sprints">
+                            <li role="presentation" data-bind="css: { 'active': isSelected() }" >
+                                <a data-bind="click: function(data, event) { $parent.selectSprint(data, event); return true; }, clickBubble: false, attr: { href: '#/sprint-view/' + id() }" style="overflow: hidden;">
+                                    <span class="pull-left" data-bind="text: name"></span>
+                                    <span class="glyphicon glyphicon-chevron-right pull-right" aria-hidden="true"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-8">
+                      <h2>Heading</h2>
+                      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                   </div>
+                </div>
+
+                <hr>
+
+                <footer>
+                    <p>&copy; Company 2015</p>
+                </footer>
+            </div>
+        </section>
+           
+
+        <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script> -->
+        <script>window.jQuery || document.write('<script src="../public/javascripts/libs/jquery-1.11.2.js"><\/script>')</script>
+
+        <script src="../public/javascripts/libs/knockout-3.1.0.debug.js"></script>
+
+        <script src="../public/javascripts/app/team-retrospective-view.js"></script>
+
+        <script src="../public/javascripts/libs/bootstrap.min.js"></script>
+        <script src="../public/javascripts/main.js"></script>
+
+        
+
+        <script src="../public/javascripts/app/retrospective.js"></script>
+        <script src="../public/javascripts/app/retrospective.config.js"></script>
+        <script src="../public/javascripts/app/retrospective.boot.js"></script>
+        <script src="../public/javascripts/app/retrospective.manager.js"></script>
+        <script src="../public/javascripts/app/retrospective.sprint.js"></script>
 
 
-	<script src="../public/javascripts/libs/jquery-1.11.2.js"></script>
-	<script src="../public/javascripts/libs/bootstrap.js"></script>
+        <script>
+          $(document).ready(function(){
+             /*
+            $.ajax({
+                url: Retrospective.Config.baseUrl + "/members",
+                dataType: "json"
+            }).success(function(result) {
+               
+                var membersContainer = $('#membersContainer');
+                var ul = membersContainer.find('ul');
 
-	<script src="../public/javascripts/retrospective.js"></script>
-  <script src="../public/javascripts/retrospective.config.js"></script>
-	<script src="../public/javascripts/retrospective.boot.js"></script>
-  <script src="../public/javascripts/retrospective.manager.js"></script>
-  <script src="../public/javascripts/retrospective.sprint.js"></script>
+                for (var i = 0; i < result.length; i++) {
+                  var memberItem = $("<li data-teamid=" +  result[i].TeamId + "> <a href='#'>" + result[i].Name + "</a></li>");
+                  ul.append(memberItem);
+                };
+                
+            }); 
+            */      
+          });
 
-  <script>
-    $(document).ready(function(){
-      $.ajax({
-          url: Retrospective.Config.baseUrl + "/members",
-          dataType: "json"
-      }).success(function(result) {
-          
-          var membersContainer = $('#membersContainer');
-          var ul = membersContainer.find('ul');
+        </script>
 
-          for (var i = 0; i < result.length; i++) {
-            var memberItem = $("<li data-teamid=" +  result[i].TeamId + "> <a href='#'>" + result[i].Name + "</a></li>");
-            ul.append(memberItem);
-          };
-
-      });       
-    });
-
-
-  </script>
-</body>
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <!-- 
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+        </script>
+        -->
+    </body>
 </html>

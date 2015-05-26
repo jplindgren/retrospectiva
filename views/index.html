@@ -99,7 +99,7 @@
                         <h2>Sprints</h2>
                         <ul class="nav nav-pills nav-stacked" data-bind="foreach: sprints">
                             <li role="presentation" data-bind="css: { 'active': isSelected() }" >
-                                <a data-bind="click: function(data, event) { $parent.selectSprint(data, event); return true; }, clickBubble: false, attr: { href: '#/sprint-view/' + id() }" style="overflow: hidden;">
+                                <a data-bind="click: function(data, event) { $parent.setSelectSprint(data, event); return true; }, clickBubble: false, attr: { href: '#/sprint-view/' + id() }" style="overflow: hidden;">
                                     <span class="pull-left" data-bind="text: name"></span>
                                     <span class="glyphicon glyphicon-chevron-right pull-right" aria-hidden="true"></span>
                                 </a>
@@ -107,9 +107,25 @@
                         </ul>
                     </div>
                     <div class="col-md-8">
-                      <h2>Heading</h2>
-                      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                        <div id="filter-box">
+                            <input type="text" class="form-control" id="txtFilter" placeholder="Filtro.." 
+                                            data-bind="value: memberFilter.searchText,
+                                            valueUpdate: 'afterkeydown',
+                                            escape: clearFilter" />
+                            <a class="clear-text" data-bind="click: clearFilter" title="Clear"></a>    
+                            <button class="refresh"  data-bind="command: forceRefreshCmd, activity: forceRefreshCmd.isExecuting">Refresh</button> <br/>   
+                            <small>Showing <span data-bind="text: members().length"></span> sessions</small>
+
+                        </div>
+                        <div class="view-list" data-bind="foreach: filteredMembers">
+                            <article class="article-right-content">    
+                                <div class="member-brief" title="Go to member details">
+                                    <img data-bind="attr: {src: id}"/>
+                                    <address data-bind="text: name"></address>
+                                    <small>Answers......</small>
+                                </div>
+                            </article>
+                        </div>
                    </div>
                 </div>
 
@@ -125,12 +141,15 @@
         <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script> -->
         <script>window.jQuery || document.write('<script src="../public/javascripts/libs/jquery-1.11.2.js"><\/script>')</script>
 
-        <script src="../public/javascripts/libs/knockout-3.1.0.debug.js"></script>
-
-        <script src="../public/javascripts/app/team-retrospective-view.js"></script>
-
         <script src="../public/javascripts/libs/bootstrap.min.js"></script>
         <script src="../public/javascripts/main.js"></script>
+
+        <script src="../public/javascripts/libs/knockout-3.1.0.debug.js"></script>
+        <script src="../public/javascripts/libs/ko.bindingHandlers.js"></script>
+        <script src="../public/javascripts/libs/knockout.asyncCommand.js"></script>        
+
+        <script src="../public/javascripts/app/team-retrospective-view.js"></script>
+        <script src="../public/javascripts/app/member-filter.js"></script>
 
         
 

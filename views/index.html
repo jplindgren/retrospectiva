@@ -36,7 +36,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Project name</a>
+              <a class="navbar-brand" href="#/main-view">Project name</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <form class="navbar-form navbar-right" role="form">
@@ -51,6 +51,8 @@
             </div><!--/.navbar-collapse -->
           </div>
         </nav>
+
+        <div id="main"></div>
 
         <section id="main-view" style="display:none">
             <!-- Main jumbotron for a primary marketing message or call to action -->
@@ -90,7 +92,7 @@
             </div> <!-- /container --> 
         </section>
 
-        <section id="team-retrospective-view" style="display:block">
+        <section id="team-retrospective-view" style="display:none">
 
             <div class="container">
                 <!-- Example row of columns -->
@@ -99,7 +101,7 @@
                         <h2>Sprints</h2>
                         <ul class="nav nav-pills nav-stacked" data-bind="foreach: sprints">
                             <li role="presentation" data-bind="css: { 'active': isSelected() }" >
-                                <a data-bind="click: function(data, event) { $parent.setSelectSprint(data, event); return true; }, clickBubble: false, attr: { href: '#/sprint-view/' + id() }" style="overflow: hidden;">
+                                <a data-bind="click: function(data, event) { $parent.setSelectSprint(data); return true; }, clickBubble: false, attr: { href: '#/sprint-retrospective-view/' + id }" style="overflow: hidden;">
                                     <span class="pull-left" data-bind="text: name"></span>
                                     <span class="glyphicon glyphicon-chevron-right pull-right" aria-hidden="true"></span>
                                 </a>
@@ -108,20 +110,20 @@
                     </div>
                     <div class="col-md-8">
                         <div id="filter-box">
-                            <input type="text" class="form-control" id="txtFilter" placeholder="Filtro.." 
+                            <input type="text" class="form-control" id="txtFilter" placeholder="Filtro..."  autocomplete="off"
                                             data-bind="value: memberFilter.searchText,
                                             valueUpdate: 'afterkeydown',
                                             escape: clearFilter" />
                             <a class="clear-text" data-bind="click: clearFilter" title="Clear"></a>    
                             <button class="refresh"  data-bind="command: forceRefreshCmd, activity: forceRefreshCmd.isExecuting">Refresh</button> <br/>   
-                            <small>Showing <span data-bind="text: members().length"></span> sessions</small>
+                            <small>Showing <span data-bind="text: members().length"></span> members</small>
 
                         </div>
                         <div class="view-list" data-bind="foreach: filteredMembers">
                             <article class="article-right-content">    
                                 <div class="member-brief" title="Go to member details">
-                                    <img data-bind="attr: {src: id}"/>
-                                    <address data-bind="text: name"></address>
+                                    <img data-bind="attr: {alt: id}" src="http://www.italiangenealogy.com//phpBB3/images/avatars/gallery/blank.gif" style="width:64px; height:64px" />
+                                    <a data-bind="attr: {href: '#/members/' + id() }"><address data-bind="text: name"></address></a>
                                     <small>Answers......</small>
                                 </div>
                             </article>
@@ -136,28 +138,85 @@
                 </footer>
             </div>
         </section>
+
+        <section id="member-detail-view" style="display:none">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                    
+                      <div class="panel panel-default">
+                            <div class="panel-body">
+                                    <div class="row">
+                                      <div class="col-xs-12 col-sm-4 text-center">
+                                                <img src="http://www.italiangenealogy.com//phpBB3/images/avatars/gallery/blank.gif" alt="" class="center-block img-circle img-responsive">
+                                                <ul class="list-inline ratings text-center" title="Ratings">
+                                                  <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+                                                  <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+                                                  <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+                                                  <li><a href="#"><span class="glyphicon glyphicon-star-empty"></span></a></li>
+                                                  <li><a href="#"><span class="glyphicon glyphicon-star-empty"></span></a></li>
+                                                </ul>
+                                        </div><!--/col--> 
+                                      
+                                      
+                                        <div class="col-xs-12 col-sm-8">
+                                            <h2 data-bind="text: user.name"></h2>
+                                            <p data-bind="text: user.username"><strong>Username: </strong> </p>
+                                            <p data-bind="text: user.teamName"><strong>Time: </strong></p>
+                                            <p><strong>Times por onde já passou: </strong>
+                                                <span class="label label-info tags">Team DropEvents</span> 
+                                                <span class="label label-info tags">BCM</span>
+                                            </p>
+                                        </div><!--/col-->                                       
+
+                                        <div class="col-xs-12 col-sm-4">
+                                            <h2><strong> 20,7K </strong></h2>                    
+                                            <p><small>Followers</small></p>
+                                            <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow </button>
+                                        </div><!--/col-->
+                                        <div class="col-xs-12 col-sm-4">
+                                            <h2><strong>245</strong></h2>                    
+                                            <p><small>Following</small></p>
+                                            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+                                        </div><!--/col-->
+                                    </div><!--/row-->
+                              </div><!--/panel-body-->
+                          </div><!--/panel-->
+
+                    
+                    
+                    </div>
+                </div>
+            </div>
+        </section>
            
 
         <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script> -->
         <script>window.jQuery || document.write('<script src="../public/javascripts/libs/jquery-1.11.2.js"><\/script>')</script>
 
         <script src="../public/javascripts/libs/bootstrap.min.js"></script>
-        <script src="../public/javascripts/main.js"></script>
+
+        <script src="../public/javascripts/libs/sammy-0.7.6.js"></script>
 
         <script src="../public/javascripts/libs/knockout-3.1.0.debug.js"></script>
         <script src="../public/javascripts/libs/ko.bindingHandlers.js"></script>
-        <script src="../public/javascripts/libs/knockout.asyncCommand.js"></script>        
+        <script src="../public/javascripts/libs/knockout.asyncCommand.js"></script>
 
-        <script src="../public/javascripts/app/team-retrospective-view.js"></script>
-        <script src="../public/javascripts/app/member-filter.js"></script>
+        <script src="../public/javascripts/libs/amplify-1.1.2.js"></script>
 
-        
+        <script src="../public/javascripts/main.js"></script>
 
         <script src="../public/javascripts/app/retrospective.js"></script>
         <script src="../public/javascripts/app/retrospective.config.js"></script>
         <script src="../public/javascripts/app/retrospective.boot.js"></script>
         <script src="../public/javascripts/app/retrospective.manager.js"></script>
         <script src="../public/javascripts/app/retrospective.sprint.js"></script>
+
+        <script src="../public/javascripts/app/routes.config.js"></script>
+        <script src="../public/javascripts/app/data-service.sprints.js"></script>
+        <script src="../public/javascripts/app/data-service.members.js"></script>
+        <script src="../public/javascripts/app/team-retrospective-view.js"></script>
+        <script src="../public/javascripts/app/member-filter.js"></script>
 
 
         <script>

@@ -5,34 +5,60 @@
 	var members = ko.observableArray([]);
 	var memberFilter = new MemberFilter();
 
-	var filteredMembers = ko.computed(function() {
-		console.log('************',!memberFilter.searchText());
-        if(!memberFilter.searchText()) {
-            return members(); 
-        } else {
-            return ko.utils.arrayFilter(members(), function(member) {
-                return member.name == memberFilter.searchText;
-            });
-        }
+    var user = new User({
+        id: '',
+        teamId: '6336df64-80ec-e411-b351-08002779885b',
+        teamName: 'Team DropEvents',
+        name: 'João Paulo Lindgren',
+        username: 'jplindgren'
     });
 
-	var selectedSprint = ko.observable();
+	var dataServiceMembers = new DataServiceMembers();
+    var dataServiceSprints = new DataServiceSprints();
 
-	var setSelectSprint = function(data, e){
+    var selectedSprint = ko.observable();
+	var filteredMembers = ko.computed(function() {
+        /*
+        if(memberFilter.searchText()) {
+        	return ko.utils.arrayFilter(selectedSprint.members(), function(member) {
+                return member.name == memberFilter.searchText;
+            });
+        } 
+        return (selectedSprint) ? selectedSprint().members() : [];
+        */
+        console.log(selectedSprint());
+        return (selectedSprint() !== undefined) ? selectedSprint().members() : [];
+    });
+
+	var setSelectSprint = function(data){
 		selectedSprint(data);
 	};
 
 	var init = function(){
-		populateSprints();
-		populateMembers();
+        //inialize to the first section
+        populateData();
 
-		memberFilter.searchText.subscribe(onFilterChange);
-
-    	//inialize to the first section
-    	selectedSprint(sprints()[0]);
+        memberFilter.searchText.subscribe(onFilterChange);
+		
 	}
 
+    var populateData = function(){
+        populateSprints().then(function(){
+            populateMembers();
+        });
+        
+    }
+
 	var populateSprints = function(){
+        return dataServiceSprints.getSprints()
+                        .then(function(results){
+                            $.map(results, function(data){
+                                var sprint = new Sprint({ id: data.id, number: data.sprintNumber }, selectedSprint);
+                                sprints.push(sprint);   
+                            });
+                            setSelectSprint(sprints()[0]);
+                        });
+        /*
 		$.ajax({
             	url: 'http://localhost:56650/api/sprints',
             	dataType: "json",
@@ -42,23 +68,19 @@
     			var sprint = new Sprint({ id: data.id, number: data.sprintNumber }, selectedSprint);
     			sprints.push(sprint);	
       		});
-
+            selectedSprint(sprints()[0]);
     	});
+        */
 	};
 
 	var populateMembers = function(){
-		$.ajax({
-            	url: 'http://localhost:56650/api/teams/6336df64-80ec-e411-b351-08002779885b/members/',
-            	dataType: "json",
-            	crossDomain: true,
-    	}).done(function(results){    		
-    		$.map(results, function(data){
-    			members.removeAll();
-    			var member = new Member({ id: data.id, name: data.name });
-    			members.push(member);
-      		});
-
-    	});
+		dataServiceMembers.getMembersBrief(userLogged.teamId, selectedSprint().id)
+								.done(function(results){
+						    		$.map(results, function(data){
+						    			selectedSprint().members.removeAll();
+						    			selectedSprint().members.push(new Member({ id: data.id, name: data.name }));
+						      		});
+    							});
 	};
 
  	var clearFilter = function () {
@@ -125,7 +147,8 @@
 		memberFilter: memberFilter,
 		clearFilter: clearFilter,
 		forceRefreshCmd: forceRefreshCmd,
-		filteredMembers: filteredMembers
+		filteredMembers: filteredMembers,
+        user: user
 	}
 };
 
@@ -133,12 +156,13 @@
 ; var Sprint = function(data, selected){ 
 	var self = this;
 	var number = ko.observable(data.number);
-	var id = ko.observable(data.id);
+	var id = data.id;
+    var members = ko.observableArray([]);
 
 	var isSelected = ko.computed(function() {
 		if (!selected())
 			return false;
-       	return id() === selected().id();
+       	return id === selected().id;
     });
 
 	var name = ko.computed(function() {
@@ -149,7 +173,8 @@
 		id: id,
 		number: number,
 		isSelected: isSelected,
-		name: name
+		name: name,
+        members: members
 	}
 };
 
@@ -162,4 +187,20 @@
 		id: id,
 		name: name
 	}
+};
+
+;var User = function(data){
+    var self = this;
+    var name = data.name;
+    var username = data.username;
+    var id = data.id;
+    var teamId = data.teamId;
+    var teamName = data.teamName;
+
+    return {
+        id: id,
+        teamId: teamId,
+        name: name,
+        username: username
+    }
 };

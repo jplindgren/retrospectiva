@@ -7,7 +7,6 @@
         });
 	};
  	var getMembersBrief = function(teamId, sprintId){
-        console.log(sprintId);
         var dfd = $.Deferred();
         amplify.request({
             resourceId: 'members-brief',

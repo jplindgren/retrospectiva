@@ -99,10 +99,11 @@
                 <div class="row">
                     <div class="col-md-4">
                         <h2>Sprints</h2>
-                        <ul class="nav nav-pills nav-stacked" data-bind="foreach: sprints">
+                        <ul class="nav nav-pills nav-stacked" data-bind="foreach: retrospectives">
                             <li role="presentation" data-bind="css: { 'active': isSelected() }" >
-                                <a data-bind="click: function(data, event) { $parent.setSelectSprint(data); return true; }, clickBubble: false, attr: { href: '#/sprint-retrospective-view/' + id }" style="overflow: hidden;">
-                                    <span class="pull-left" data-bind="text: name"></span>
+                                <a data-bind="click: function(data, event) { $parent.setActiveRetrospective(data); return true; },  
+                                        clickBubble: false, attr: { href: '#/sprint-retrospective-view/' + id }" style="overflow: hidden;">
+                                    <span class="pull-left" data-bind="text: sprint().name"></span>
                                     <span class="glyphicon glyphicon-chevron-right pull-right" aria-hidden="true"></span>
                                 </a>
                             </li>
@@ -116,10 +117,10 @@
                                             escape: clearFilter" />
                             <a class="clear-text" data-bind="click: clearFilter" title="Clear"></a>    
                             <button class="refresh"  data-bind="command: forceRefreshCmd, activity: forceRefreshCmd.isExecuting">Refresh</button> <br/>   
-                            <small>Showing <span data-bind="text: members().length"></span> members</small>
+                            <small>Showing <span data-bind="text: filteredRetrospectiveMembers().length"></span> members</small>
 
                         </div>
-                        <div class="view-list" data-bind="foreach: filteredMembers">
+                        <div class="view-list" data-bind="foreach: filteredRetrospectiveMembers">
                             <article class="article-right-content">    
                                 <div class="member-brief" title="Go to member details">
                                     <img data-bind="attr: {alt: id}" src="http://www.italiangenealogy.com//phpBB3/images/avatars/gallery/blank.gif" style="width:64px; height:64px" />
@@ -190,6 +191,7 @@
             </div>
         </section>
            
+        <div data-bind="dump: filteredMembers"></div>
 
         <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script> -->
         <script>window.jQuery || document.write('<script src="../public/javascripts/libs/jquery-1.11.2.js"><\/script>')</script>
@@ -204,6 +206,8 @@
 
         <script src="../public/javascripts/libs/amplify-1.1.2.js"></script>
 
+        <script src="../public/javascripts/app/dump.knockout.js"></script>
+
         <script src="../public/javascripts/main.js"></script>
 
         <script src="../public/javascripts/app/retrospective.js"></script>
@@ -215,6 +219,7 @@
         <script src="../public/javascripts/app/routes.config.js"></script>
         <script src="../public/javascripts/app/data-service.sprints.js"></script>
         <script src="../public/javascripts/app/data-service.members.js"></script>
+        <script src="../public/javascripts/app/data-service.retrospectives.js"></script>
         <script src="../public/javascripts/app/team-retrospective-view.js"></script>
         <script src="../public/javascripts/app/member-filter.js"></script>
 

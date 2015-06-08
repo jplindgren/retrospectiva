@@ -55,12 +55,6 @@
 
     var restoreFilter = function () {
     	console.log('restoreFilter');
-    	/*
-        var val = store.fetch(stateKey.searchText);
-        if (val !== memberFilter.searchText()) {
-            memberFilter.searchText(val);
-        }
-        */
     };
 
     var onFilterChange = function (val) {
@@ -136,10 +130,10 @@
 ; var Member = function(data){ 
 	var self = this;
 	var name = ko.observable(data.name);
-	var id = ko.observable(data.id);
+	var userId = ko.observable(data.userId);
 
 	return {
-		id: id,
+		id: userId,
 		name: name
 	}
 };
@@ -161,11 +155,15 @@
     var id = data.id;
     var teamId = data.teamId;
     var teamName = data.teamName;
+    var retrospectiveMemberId = data.retrospectiveMemberId;
 
     return {
         id: id,
         teamId: teamId,
         name: name,
-        username: username
+        username: username,
+        retrospectiveMemberId: retrospectiveMemberId
     }
 };
+
+

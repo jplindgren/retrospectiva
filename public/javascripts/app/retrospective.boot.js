@@ -4,21 +4,23 @@ $(function(){
 	Retrospective.init(document.body);
 
 	var dataServicesRetrospectives = new DataServiceRetrospectives();
-	var user = new User({
+	LoggedUser = new User({
         id: '',
-        teamId: '7a6939eb-9b08-e511-be73-c48508d65d66',
-        teamName: 'Team DropEvents',
+        retrospectiveMemberId: '7B2AACF8-130C-E511-87ED-08002779885B',
+        teamId: '85be4abc-130c-e511-87ed-08002779885b',
+        teamName: 'DropEvents',
         name: 'João Paulo Lindgren',
         username: 'jplindgren'
     });
 
 	var populateRetrospectives = function(){
-        return dataServicesRetrospectives.getRetrospectives(user.teamId)
+        return dataServicesRetrospectives.getRetrospectives(LoggedUser.teamId)
                 .then(function(results){
                             $.map(results, function(data){
                                 var members = $.map(data.members, function(data){
-                                    return new Member({ id: data.id, name: data.name })
+                                    return new Member({ userId: data.userId, name: data.name })
                                 });
+
                                 var retrospective = new RetrospectivePOCO({
                                     id: data.id, 
                                     team: new Team({ id: data.teamId, name: data.teamName }),
@@ -27,9 +29,10 @@ $(function(){
                                 }, ko.observable());
                                 retrospectives.push(retrospective);
                             });
+
                             var teamRetrospective = new TeamRetrospectiveViewModel(retrospectives)
 							teamRetrospective.init();			
-							ko.applyBindings(teamRetrospective);
+							ko.applyBindings(teamRetrospective, document.getElementById('team-retrospective-view'));
                         });
     };
     populateRetrospectives();
